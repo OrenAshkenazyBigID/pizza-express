@@ -1,0 +1,14 @@
+---
+- name: Use Localhost for checks
+  hosts: 127.0.0.1
+  connection: local
+  tasks:
+   - name: Check Server endpoint
+     become: yes
+     uri:
+       url: http://localhost:3000
+       status_code: 200
+     register: result
+     until: result.status == 200
+     retries: 3
+     delay: 1
